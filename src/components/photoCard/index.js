@@ -8,9 +8,9 @@ export default class PhotoCard extends Component {
   render() {
     const { src, photographer } = this.props;
     return (
-      <div>
+      <div className="card">
         <img src={src.medium} />
-        <div>{photographer}</div>
+        <div className="name">{photographer}</div>
       </div>
     );
   }

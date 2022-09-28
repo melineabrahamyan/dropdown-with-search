@@ -69,11 +69,11 @@ class Gallery extends Component {
           //onChange={this.handleSearchInput2}
           onChange={this.handleSearchInput}
           type="text"
-          placeholder="Type the photographer's name"
+          placeholder="Search..."
           value={searchInput}
         />
 
-        <div>
+        <div className="container">
           {users.map((user) => (
             <PhotoCard key={user.id} {...user} />
           ))}
