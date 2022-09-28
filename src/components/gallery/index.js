@@ -6,7 +6,7 @@ class Gallery extends Component {
   constructor() {
     super();
     this.users = [];
-    this.state = { users: [] };
+    this.state = { users: [], searchInput: "" };
   }
 
   componentDidMount() {
@@ -24,10 +24,55 @@ class Gallery extends Component {
       });
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    const { searchInput } = this.state;
+
+    if (prevState.searchInput !== this.state.searchInput) {
+      if (searchInput.length >= 3) {
+        this.setState({
+          users: this.users.filter((user) =>
+            user.photographer.toLowerCase().includes(searchInput.toLowerCase())
+          ),
+        });
+      } else {
+        this.setState({ users: this.users });
+      }
+    }
+  }
+
+  //   id = undefined;
+  //   handleSearchInput2 = (e) => {
+  //     this.setState({ searchInput: e.target.value });
+  //     const { searchInput } = this.state;
+  //     if (this.id !== undefined) {
+  //       this.setState({ users: this.users });
+  //       clearTimeout(this.id);
+  //     }
+  //     this.id = setTimeout(() => {
+  //       this.setState({
+  //         users: this.users.filter((user) =>
+  //           user.photographer.toLowerCase().includes(searchInput.toLowerCase())
+  //         ),
+  //       });
+  //     }, 0);
+  //   };
+
+  handleSearchInput = (e) => {
+    this.setState({ searchInput: e.target.value });
+  };
+
   render() {
-    const { users } = this.state;
+    const { users, searchInput } = this.state;
     return (
       <>
+        <input
+          //onChange={this.handleSearchInput2}
+          onChange={this.handleSearchInput}
+          type="text"
+          placeholder="Type the photographer's name"
+          value={searchInput}
+        />
+
         <div>
           {users.map((user) => (
             <PhotoCard key={user.id} {...user} />
